@@ -37,19 +37,17 @@ public class AlienRepo {
     public List<Alien> getAlienList() {
         String sql = "SELECT * FROM alien";
 
-        RowMapper<Alien> rowMapper = new RowMapper<Alien>() {
-            @Override
-            public Alien mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-                Alien a = new Alien();
-                a.setId(rs.getInt(1));
-                a.setName(rs.getString(2));
-                a.setTech(rs.getString(3));
+        List<Alien> aliens = template.query(sql, (rs, rowNum) ->{
 
-                return a;
-            }
-        };
-        List<Alien> aliens = template.query(sql, rowMapper);
+            Alien a = new Alien();
+            a.setId(rs.getInt(1));
+            a.setName(rs.getString(2));
+            a.setTech(rs.getString(3));
+
+             return a;
+
+        });
         return aliens;
     };
 
